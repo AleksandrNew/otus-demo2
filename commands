@@ -1,0 +1,17 @@
+docker pull otusregistry.azurecr.io/devops:10.2020
+
+git clone https://github.com/AleksandrNew/otus-demo2.git
+
+docker-compose up
+
+docker ps
+
+docker exec -it ansiblehost pwsh
+
+ansible-playbook ./playbook-1.yml -v
+
+sudo -u postgres -i
+
+ansible-playbook ./playbook-2.yml -v
+
+docker-compose down

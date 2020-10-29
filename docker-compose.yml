@@ -1,0 +1,70 @@
+version: '3.1'
+
+services:
+    ansiblehost:
+      image: otusregistry.azurecr.io/devops:10.2020
+      container_name: ansiblehost
+      command: tail -f /dev/null
+      ports:
+        - "80:80"
+        - "5432:5432"
+      networks:
+        host-network:
+          ipv4_address: "172.25.0.2"
+      volumes:
+      # change path C:\Users\ano\OneDrive\otus\Demo2\git to your directory
+      - C:\Users\ano\OneDrive\otus\Demo2\git:/home
+
+    ubuntuserver:
+      image: otusregistry.azurecr.io/ubuntu:20.04
+      container_name: ubuntuserver
+      command: /etc/init.d/ssh start -D
+      ports:
+        - "81:80"
+      networks:
+        host-network:
+          ipv4_address: "172.25.0.3"
+
+    ubuntuserver2:
+      image: otusregistry.azurecr.io/ubuntu:20.04
+      container_name: ubuntuserver2
+      command: /etc/init.d/ssh start -D
+      ports:
+        - "82:80"
+      networks:
+        host-network:
+          ipv4_address: "172.25.0.4"
+
+    ubuntuserver3:
+      image: otusregistry.azurecr.io/ubuntu:20.04
+      container_name: ubuntuserver3
+      command: /etc/init.d/ssh start -D
+      ports:
+        - "83:80"
+      networks:
+        host-network:
+          ipv4_address: "172.25.0.5"
+
+    ubuntuserver4:
+      image: otusregistry.azurecr.io/ubuntu:20.04
+      container_name: ubuntuserver4
+      command: /etc/init.d/ssh start -D
+      networks:
+        host-network:
+          ipv4_address: "172.25.0.6"
+
+    ubuntuserver5:
+      image: otusregistry.azurecr.io/ubuntu:20.04
+      container_name: ubuntuserver5
+      command: /etc/init.d/ssh start -D
+      networks:
+        host-network:
+          ipv4_address: "172.25.0.7"
+
+networks:
+  host-network:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: "172.25.0.0/16"
+        gateway: "172.25.0.1"

@@ -1,0 +1,17 @@
+- name: MyFirstPlaybook
+  hosts: localhost
+  gather_facts: true
+
+  tasks:
+    - name: installing nginx
+      apt: name=nginx state=present
+
+    - name: starting nginx service
+      service: name=nginx state=started
+
+    - name: installing postgresql
+      apt: name=postgresql state=present
+
+    - name: starting postgresql service
+      service: name=postgresql state=started
+

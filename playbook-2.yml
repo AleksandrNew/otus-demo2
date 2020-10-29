@@ -1,0 +1,58 @@
+- name: MySecondPlaybook
+  hosts: localhost
+  become: true
+  gather_facts: true
+  tasks:
+    - name: adding web hosts
+      add_host:
+        name: "{{ item }}"
+        ansible_ssh_user: user
+        ansible_ssh_pass: user
+        ansible_sudo_pass: user
+        group: web_hosts
+      with_items:
+        - "172.25.0.3"
+        - "172.25.0.4"
+        - "172.25.0.5"
+
+    - name: adding db hosts
+      add_host:
+        name: "{{ item }}"
+        ansible_ssh_user: user
+        ansible_ssh_pass: user
+        ansible_sudo_pass: user
+        ansible_host_key_checking: false
+        group: db_hosts
+      with_items:
+        - "172.25.0.6"
+        - "172.25.0.7"
+
+- hosts: web_hosts
+  become_method: sudo
+  become: true
+  gather_facts: true
+  tasks:
+    - name: installing nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: starting nginx service
+      service:
+        name: nginx
+        state: started
+
+- hosts: db_hosts
+  become_method: sudo
+  become: true
+  gather_facts: true
+  tasks:
+    - name: installing postgresql
+      apt:
+        name: postgresql
+        state: present
+
+    - name: starting postgresql service
+      service:
+        name: postgresql
+        state: started
